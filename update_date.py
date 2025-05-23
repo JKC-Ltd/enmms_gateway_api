@@ -9,10 +9,10 @@ headers     = {
 response    = requests.get(url, headers=headers)
 data        = response.json()
 current_date= data["date"]    
-print(current_date)
+#print(current_date)
 
 #sudo date MMDDhhmmYYYY
-command = ["sudo","date", "052315262025"]
+command = ["sudo","date", current_date]
 
 try:
     result = subprocess.run(command, check = True, capture_output=True, text=True)
