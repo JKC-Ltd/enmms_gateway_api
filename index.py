@@ -1,6 +1,6 @@
 from pymodbus.client import ModbusSerialClient
 import db_connections
-import gateway_config
+import configuration
 import insert_algo
 import time 
 from datetime import datetime
@@ -9,8 +9,8 @@ import sys
 date_now        = datetime.now().strftime("%Y-%m-%d %H:%M:00")
 
 # DECLARING ID's
-gateway_id      = gateway_config.gateway_id
-gateway_code    = gateway_config.gateway_code
+gateway_id      = configuration.gateway_id
+gateway_code    = configuration.gateway_code
 
 # DECLARING MOBUSCLIENT
 client          = ModbusSerialClient(
@@ -34,7 +34,7 @@ if(db_connections.local_database()):
 # sys.exit()
 
 # GETTING METTERS DATA
-meter_results   = gateway_config.get_metter_ids()
+meter_results   = configuration.get_metter_ids()
 # [
 #     {'id': 1, 'slave_address': '5', 'register_address': [0, 6, 12, 18, 342], 'parameter': ['voltage_ab', 'voltage_bc', 'voltage_ca', 'current_a', 'real_power']}, 
 #     {'id': 2, 'slave_address': '6', 'register_address': [0, 6, 12, 18, 342], 'parameter': ['voltage_ab', 'voltage_bc', 'voltage_ca', 'current_a', 'real_power']}, 

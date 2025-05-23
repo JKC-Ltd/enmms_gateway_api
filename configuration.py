@@ -5,6 +5,9 @@ import time
 from datetime import datetime
 import sys
 
+#DECLARING API LINK
+url_link        = "https://dev-enmms-api.spphportal.site"
+
 # DECLARING ID's
 gateway_id      = 2
 gateway_code    = "GAT-02"
