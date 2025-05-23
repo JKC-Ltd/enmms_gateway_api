@@ -1,6 +1,6 @@
+import configuration
 import requests
 import subprocess
-import configuration
 
 api_link    = configuration.url_link
 url         = f"""{api_link}/api/get-date"""
