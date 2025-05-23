@@ -2,10 +2,12 @@ import configuration
 import requests
 import subprocess
 
-api_link    = configuration.url_link
+api_link    = configuration.api_link
+api_bearer  = configuration.api_bearer
+
 url         = f"""{api_link}/api/get-date"""
 headers     = {
-                "Authorization": "Bearer 3e13911adffce018d97286bb760dd49146d2a40318542bb1e99219a268f5340a%",
+                "Authorization": api_bearer,
                 "Content-Type": "application/json"
               }
 response    = requests.get(url, headers=headers)

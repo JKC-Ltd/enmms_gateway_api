@@ -6,7 +6,8 @@ from datetime import datetime
 import sys
 
 #DECLARING API LINK
-url_link        = "https://dev-enmms-api.spphportal.site"
+api_link        = "https://dev-enmms-api.spphportal.site"
+api_bearer      = "Bearer 3e13911adffce018d97286bb760dd49146d2a40318542bb1e99219a268f5340a%"
 
 # DECLARING ID's
 gateway_id      = 2
