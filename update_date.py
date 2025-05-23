@@ -8,7 +8,8 @@ headers     = {
               }
 response    = requests.get(url, headers=headers)
 data        = response.json()
-print(data)
+current_date= data["date"]    
+print(current_date)
 
 #sudo date MMDDhhmmYYYY
 command = ["sudo","date", "052315262025"]
