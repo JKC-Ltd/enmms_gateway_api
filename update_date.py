@@ -6,7 +6,7 @@ headers     = {
                 "Authorization": "Bearer 3e13911adffce018d97286bb760dd49146d2a40318542bb1e99219a268f5340a%",
                 "Content-Type": "application/json"
               }
-response    = request.get(url, headers=headers)
+response    = requests.get(url, headers=headers)
 data        = response.json()
 print(data)
 
