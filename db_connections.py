@@ -11,9 +11,9 @@ def cloud_database():
     try:
         cloud_connection = mysql.connector.connect(
                         host = "srv1742.hstgr.io",
-                        user = "u565803524_siix",
-                        password = "|C9leEeiFQ4",
-                        database="u565803524_siix"
+                        user = "u565803524_dev_enmms_api",
+                        password = "Smartpower123!",
+                        database="u565803524_dev_enmms_api"
                     )
         if cloud_connection.is_connected():
             return cloud_connection

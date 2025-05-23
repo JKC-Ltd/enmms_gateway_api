@@ -1,6 +1,6 @@
 import mysql.connector
 import db_connections
-import gateway_config
+import configuration
 import time 
 from datetime import datetime
 import sys
@@ -10,8 +10,8 @@ local_database = db_connections.local_database()
 date_now       = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 # DECLARING ID's
-gateway_id      = gateway_config.gateway_id
-gateway_code    = gateway_config.gateway_code
+gateway_id      = configuration.gateway_id
+gateway_code    = configuration.gateway_code
 
 def insert_sensor_logs(meter_id, slave_address, column_parameter = "", values = ""):
     try:

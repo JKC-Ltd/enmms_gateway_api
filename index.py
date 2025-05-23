@@ -6,7 +6,7 @@ import time
 from datetime import datetime
 import sys
 
-date_now        = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+date_now        = datetime.now().strftime("%Y-%m-%d %H:%M:00")
 
 # DECLARING ID's
 gateway_id      = gateway_config.gateway_id
