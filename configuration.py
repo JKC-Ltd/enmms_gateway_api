@@ -182,7 +182,8 @@ def sync_cloud_to_local():
     from_sql        = f"""SELECT * FROM sensor_offlines WHERE gateway_id = {gateway_id} ORDER BY id"""
     from_query.execute(from_sql)
     from_result     = from_query.fetchall()
-
+    print(from_result)
+    sys.exit()
     for row in from_result:
         row_id      = row["id"]
         sql         = row["query"]
@@ -237,7 +238,6 @@ def sync_local_to_cloud():
     from_result     = from_query.fetchall()
 
     for row in from_result:
-        print(row["query"])
         json_data   = set(json.loads(row["query"]))
         result_data = {"array_result": json_data }
         cloud_insert(result_data)
