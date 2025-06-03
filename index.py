@@ -20,7 +20,7 @@ pymodbus_client  = configuration.pymodbus_client
 #     db_connections.sync(gateway_id, False)
 
 # GETTING METTERS DATA
-meter_results   = configuration.get_metter_ids()
+# meter_results   = configuration.get_metter_ids()
 meter_results = [
                     {'id': 1, 'slave_address': '5', 'sensor_model_id': '2', 'register_address': [0, 6, 12, 18, 342], 'parameter': ['voltage_ab', 'voltage_bc', 'voltage_ca', 'current_a', 'real_power']}, 
                     {'id': 2, 'slave_address': '6', 'sensor_model_id': '2', 'register_address': [0, 6, 12, 18, 342], 'parameter': ['voltage_ab', 'voltage_bc', 'voltage_ca', 'current_a', 'real_power']}, 

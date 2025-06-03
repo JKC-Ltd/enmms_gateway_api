@@ -1,4 +1,3 @@
-
 from pymodbus.client import ModbusSerialClient
 import mysql.connector
 from mysql.connector import Error
