@@ -154,7 +154,7 @@ def cloud_insert(result_data):
 def insert_offlines(result_data = False):
      array_result      = result_data["array_result"]
      array_result_str  = json.dumps(array_result)
-     print(array_result)
+     print(array_result_str)
      sys.exit()
      sql               = f""" INSERT INTO sensor_offlines (query,gateway_id) VALUES ("{array_result_str}", {gateway_id}) """
      db_connection     = local_database()
