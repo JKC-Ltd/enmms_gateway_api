@@ -135,7 +135,7 @@ def local_insert(result_data = False):
 def cloud_insert(result_data):
 
     array_result = result_data["array_result"]
-    url          = f"""{api_link}/api/store-sensor-log """
+    url          = f"""{api_link}/api/store-sensor-log"""
     try:
         response = requests.get(url, timeout=5)
         if response.status_code == 200:
@@ -155,14 +155,15 @@ def insert_offlines(result_data = False):
      array_result      = result_data["array_result"]
      array_result_str  = json.dumps(list(array_result))
      sql               = f""" INSERT INTO sensor_offlines (query,gateway_id) VALUES ("{array_result_str}", {gateway_id}) """
+     db_connection     = local_database()
      try:
-        if not local_database.is_connected():
+        if not db_connection.is_connected():
             print("Local database connection lost. Reconnecting...")
-            local_database.reconnect()
+            db_connection.reconnect()
 
-        local_query     = local_database.cursor()
+        local_query     = db_connection.cursor()
         local_query.execute(sql)
-        local_database.commit()
+        db_connection.commit()
         if local_query.rowcount > 0:
             print("Insert to Offlines Successfully")
         else:
@@ -170,11 +171,11 @@ def insert_offlines(result_data = False):
 
      except mysql.connector.Error as error_message:
             print(f"Error: {error_message}")
-            local_database.rollback()  # Rollback if error occurs
+            db_connection.rollback()  # Rollback if error occurs
      finally:
-        if local_database.is_connected():
+        if db_connection.is_connected():
             local_query.close()
-            local_database.close()
+            db_connection.close()
 
 
 def sync_cloud_to_local():
