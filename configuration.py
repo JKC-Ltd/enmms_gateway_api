@@ -24,7 +24,7 @@ pymodbus_client          = ModbusSerialClient(
                                     )
 
 # DECLARING GLOBAL VARIABLE
-datetime_now    = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+datetime_now    = datetime.now().strftime("%Y-%m-%d %H:%M:00")
 
 def local_database():
     try:

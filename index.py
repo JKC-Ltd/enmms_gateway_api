@@ -71,15 +71,35 @@ for meter_result in meter_results:
     meter_value_temp = meter_value_temp + (date_now,)
     meter_value      = (gateway_id, meter_id) + meter_value_temp
     array_result     = dict(zip(columns, list(meter_value)))
-
-    result_data      = { 'meter_id':meter_id, 
-                            'slave_address': slave_address, 
-                            'column_parameter': column_parameter, 
-                            'meter_value': meter_value,
-                            'array_result': array_result
-                        }
+    result_data      = {'array_result':array_result}
+    
     print(result_data)
     sys.exit()
+    # OLD METHOD
+        # result_data      = { 
+        #                     'meter_id':meter_id, 
+        #                     'slave_address': slave_address, 
+        #                     'column_parameter': column_parameter, 
+        #                     'meter_value': meter_value,
+        #                     'array_result': array_result
+        #                     }
+        # SAMPLE RESULT DATA
+        # result_data = {
+        #     'meter_id': 1, 
+        #     'slave_address': 5, 
+        #     'column_parameter': 'gateway_id, sensor_id, voltage_ab, voltage_bc, voltage_ca, current_a, real_power, datetime_created', 
+        #     'meter_value': (2, 1, 230.13, 0.81, 0.0, 0.0, 434.5, '2025-06-03 15:21:25'), 
+        #     'array_result': {
+        #                         'gateway_id': 2, 
+        #                         'sensor_id': 1, 
+        #                         'voltage_ab': 230.13, 
+        #                         'voltage_bc': 0.81, 
+        #                         'voltage_ca': 0.0, 
+        #                         'current_a': 0.0, 
+        #                         'real_power': 434.5, 
+        #                         'datetime_created': '2025-06-03 15:21:25'
+        #                     }
+        # }
     # sample_result.append(result_data)
     
  
