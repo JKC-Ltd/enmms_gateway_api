@@ -45,7 +45,7 @@ def local_database():
 
 def get_metter_ids():
     meters_result   = []
-    local_conn      = db_connections.local_database()
+    local_conn      = local_database()
     query           = local_conn.cursor(dictionary=True)
     sql             = f""" SELECT sensors.id AS id, slave_address, sensor_reg_address, sensor_type_parameter, sensor_models.id AS sensor_model_id FROM sensors
                             LEFT JOIN sensor_models

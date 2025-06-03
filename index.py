@@ -39,7 +39,7 @@ for meter_result in meter_results:
     slave_address       = int(meter_result['slave_address'])
     columns             = ["gateway_id","sensor_id"] + meter_result['parameter'] + ['datetime_created']
     register_addresses  = meter_result['register_address']
-    # column_parameter    = ', '.join(columns)
+    column_parameter    = ', '.join(columns)
     meter_value_temp    = ()
     
     i = 0 # <- This is only for the Index of register_addresses
@@ -71,19 +71,18 @@ for meter_result in meter_results:
     meter_value_temp = meter_value_temp + (date_now,)
     meter_value      = (gateway_id, meter_id) + meter_value_temp
     array_result     = dict(zip(columns, list(meter_value)))
-    print(array_result)
-    sys.exit()
-    # GOAL RESULT
-    
+
     result_data      = { 'meter_id':meter_id, 
                             'slave_address': slave_address, 
                             'column_parameter': column_parameter, 
-                            'meter_value': meter_value
+                            'meter_value': meter_value,
+                            'array_result': array_result
                         }
-
-    sample_result.append(result_data)
+    print(result_data)
+    sys.exit()
+    # sample_result.append(result_data)
     
-    # insert_algo.insert_sensor_logs(meter_id, column_parameter, meter_value)
+ 
     
 
 
