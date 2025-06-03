@@ -70,7 +70,7 @@ for meter_result in meter_results:
     meter_value_temp = tuple(map(float, meter_value_temp))  # Convert values to float if they're strings
     meter_value_temp = meter_value_temp + (date_now,)
     meter_value      = (gateway_id, meter_id) + meter_value_temp
-    array_result     = column_parameter = list(meter_value)
+    array_result     = dict(zip(columns, list(meter_value)))
     print(array_result)
     sys.exit()
     # GOAL RESULT
