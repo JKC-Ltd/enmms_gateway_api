@@ -105,18 +105,19 @@ def insert_logs(result_data = False):
     cloud_insert(result_data)
 
 def local_insert(result_data = False):
-     column_parameter = result_data["column_parameter"]
-     meter_values     = result_data["meter_value"]
+     column_parameter  = result_data["column_parameter"]
+     meter_values      = result_data["meter_value"]
+     db_connection     = local_database()
      try:
-            if not local_database.is_connected():
+            if not db_connection.is_connected():
                 print("Local database connection lost. Reconnecting...")
-                local_database.reconnect()
+                db_connection.reconnect()
         
             columns = ", ".join([col.strip() for col in column_parameter.split(',')])
             sql     = f""" INSERT INTO sensor_logs ({columns}) VALUES {meter_values} """
-            query   = local_database.cursor()
+            query   = db_connection.cursor()
             query.execute(sql)
-            local_database.commit()
+            db_connection.commit()
             if query.rowcount > 0:
                 print("INSERTED TO LOCAL SUCCESSFULLY")
             else:
@@ -124,11 +125,11 @@ def local_insert(result_data = False):
 
      except mysql.connector.Error as error_message:
          print(f"Error: {error_message}")
-         local_database.rollback()  # Rollback if error occurs
+         db_connection.rollback()  # Rollback if error occurs
      finally:
-        if local_database.is_connected():
+        if db_connection.is_connected():
             query.close()
-            local_database.close()
+            db_connection.close()
 
 
 def cloud_insert(result_data):
@@ -187,7 +188,7 @@ def sync_cloud_to_local():
         sql         = row["query"]
         to_database = local_database()
         to_query    = to_database.cursor(dictionary=True)
-        
+
         try:
             if to_database.is_connected():
                 to_query.execute(sql)
