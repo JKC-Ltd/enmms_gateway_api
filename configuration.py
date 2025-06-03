@@ -209,7 +209,7 @@ def sync_cloud_to_local():
                         
                     else:
                         from_database  = cloud_database()
-                        from_query = from_conn.cursor(dictionary=True)
+                        from_query = from_database.cursor(dictionary=True)
                         from_query.execute(delete_sql)
 
                     
