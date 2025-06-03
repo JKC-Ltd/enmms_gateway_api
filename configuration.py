@@ -186,34 +186,34 @@ def sync_cloud_to_local():
     for row in from_result:
         row_id      = row["id"]
         sql         = row["query"]
-        to_conn     = local_database()
-        to_query    = to_conn.cursor(dictionary=True)
+        to_database = local_database()
+        to_query    = to_database.cursor(dictionary=True)
 
         try:
-            if to_conn.is_connected():
+            if to_database.is_connected():
                 to_query.execute(sql)
-                to_conn.commit()
+                to_database.commit()
                 print(f"Query executed successfully. Rows affected: {to_query.rowcount}")
 
             else:
                 print("Connection is no longer active, reconnecting...")
-                to_conn  = local_database()
-                to_query = to_conn.cursor(dictionary=True)
+                to_database  = local_database()
+                to_query     = to_database.cursor(dictionary=True)
                 to_query.execute(sql) 
 
             if(to_query.rowcount > 0):
                     delete_sql = f"""DELETE FROM `sensor_offlines` WHERE id = {row_id}"""
 
-                    if from_conn.is_connected():
+                    if from_database.is_connected():
                         from_query.execute(delete_sql)
                         
                     else:
-                        from_conn  = cloud_database()
+                        from_database  = cloud_database()
                         from_query = from_conn.cursor(dictionary=True)
                         from_query.execute(delete_sql)
 
                     
-                    from_conn.commit()
+                    from_database.commit()
                     print(f"Successfully Sync...")
             else:
                 print(sql)
@@ -222,12 +222,12 @@ def sync_cloud_to_local():
         except mysql.connector.Error as error_message:
             print(f"Query INVALID. Rows affected:")
             print(f"Error: {error_message}")
-            to_conn.rollback()
+            to_database.rollback()
         finally:
             from_query.close()
-            from_conn.close()
+            from_database.close()
             to_query.close()
-            to_conn.close() 
+            to_database.close() 
          
 def sync_local_to_cloud():
     from_database   =  local_database()
