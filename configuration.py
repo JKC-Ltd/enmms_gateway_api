@@ -145,11 +145,11 @@ def cloud_insert(result_data):
             data     = response.json()
             print(data)
         else:
-            print(f" WARNING API responded with status: {response.status_code}")
             insert_offlines(result_data)
+            print(f" WARNING API responded with status: {response.status_code}")
     except requests.exceptions.RequestException as e:
-        print(f" ERROR API is not reachable. Error: {e}")
         insert_offlines(result_data)
+        print(f" ERROR API is not reachable. Error: {e}")
 
 def insert_offlines(result_data = False):
      array_result      = result_data["array_result"]
