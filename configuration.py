@@ -135,8 +135,6 @@ def local_insert(result_data = False):
 def cloud_insert(result_data):
 
     array_result = result_data["array_result"]
-    print(array_result)
-    sys.exit()
     url          = f"""{api_link}/api/store-sensor-log"""
     try:
         response = requests.get(url, timeout=5)
