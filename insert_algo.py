@@ -5,15 +5,19 @@ import time
 from datetime import datetime
 import sys
 
+# GLOBAL VARIABLE
+api_link       = configuration.api_link
+api_bearer     = configuration.api_bearer
+
 cloud_database = db_connections.cloud_database()
 local_database = db_connections.local_database()
-date_now       = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+date_now       = datetime.now().strftime("%Y-%m-%d %H:%M:00")
 
 # DECLARING ID's
 gateway_id      = configuration.gateway_id
 gateway_code    = configuration.gateway_code
 
-def insert_sensor_logs(meter_id, slave_address, column_parameter = "", values = ""):
+def insert_sensor_logs(meter_id, column_parameter = "", values = ""):
     try:
             # Check if the connection is open
             if cloud_database:
@@ -36,11 +40,7 @@ def insert_sensor_logs(meter_id, slave_address, column_parameter = "", values = 
                                 (query,gateway_id) VALUES ("{sql}", {gateway_id}) """
             offline_values  = (sql,meter_id)
 
-            #print(f"SQL Query: {sql}")
-            #print(f"Values: {offline_values}")
-
-            
-            local_query = local_database.cursor()
+            local_query     = local_database.cursor()
 
             if not cloud_database:
                 # This code will be excuted if the server is Down or the Gateway is Offline

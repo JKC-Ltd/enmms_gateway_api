@@ -5,7 +5,7 @@ from datetime import datetime
 import sys
 
 
-datetime_now    = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
 
 def cloud_database():
     try:
@@ -25,21 +25,7 @@ def cloud_database():
             print(f"Cloud Connection failed: {cloud_error}")
             return False
 
-def local_database():
-    try:
-        local_database = mysql.connector.connect(
-                        host = "localhost",
-                        user = "root",
-                        password = "0smartPower0",
-                        database="enmms"
-                    )
-        if local_database.is_connected():
-            return local_database
 
-    except Error as local_error:
-            print(f"Local database interupt at {datetime_now}")
-            print(f"Local Connection failed: {local_error}")
-            return False
 
 def sync(gateway_id, fromCloudToLocal = True):
 

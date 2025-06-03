@@ -1,47 +1,32 @@
-from pymodbus.client import ModbusSerialClient
-import db_connections
+# from pymodbus.client import ModbusSerialClient
 import configuration
-import insert_algo
-import time 
-from datetime import datetime
 import sys
 
-date_now        = datetime.now().strftime("%Y-%m-%d %H:%M:00")
+date_now        = configuration.datetime_now
 
 # DECLARING ID's
 gateway_id      = configuration.gateway_id
 gateway_code    = configuration.gateway_code
 
 # DECLARING MOBUSCLIENT
-client          = ModbusSerialClient(
-                        port='/dev/ttyUSB0',
-                        baudrate =9600,
-                        stopbits=1,
-                        parity="N",
-                        bytesize=8,
-                        timeout=2	
-                    )
-
+pymodbus_client  = configuration.pymodbus_client
 
 #SYNCING DATA FROM CLOUD TO LOCAL
-if(db_connections.cloud_database()):
-    db_connections.sync(gateway_id)
+# if(db_connections.cloud_database()):
+#     db_connections.sync(gateway_id)
     
 #SYNCING DATA FROM LOCAL TO CLOUD
-if(db_connections.local_database()):
-    db_connections.sync(gateway_id, False)
-
-# sys.exit()
+# if(db_connections.local_database()):
+#     db_connections.sync(gateway_id, False)
 
 # GETTING METTERS DATA
 meter_results   = configuration.get_metter_ids()
-# [
-#     {'id': 1, 'slave_address': '5', 'register_address': [0, 6, 12, 18, 342], 'parameter': ['voltage_ab', 'voltage_bc', 'voltage_ca', 'current_a', 'real_power']}, 
-#     {'id': 2, 'slave_address': '6', 'register_address': [0, 6, 12, 18, 342], 'parameter': ['voltage_ab', 'voltage_bc', 'voltage_ca', 'current_a', 'real_power']}, 
-#     {'id': 3, 'slave_address': '7', 'register_address': [0, 6, 12, 18, 342], 'parameter': ['voltage_ab', 'voltage_bc', 'voltage_ca', 'current_a', 'real_power']}
-# ]
-#print(meter_results)
-#sys.exit()
+meter_results = [
+                    {'id': 1, 'slave_address': '5', 'sensor_model_id': '2', 'register_address': [0, 6, 12, 18, 342], 'parameter': ['voltage_ab', 'voltage_bc', 'voltage_ca', 'current_a', 'real_power']}, 
+                    {'id': 2, 'slave_address': '6', 'sensor_model_id': '2', 'register_address': [0, 6, 12, 18, 342], 'parameter': ['voltage_ab', 'voltage_bc', 'voltage_ca', 'current_a', 'real_power']}, 
+                    {'id': 3, 'slave_address': '7', 'sensor_model_id': '2', 'register_address': [0, 6, 12, 18, 342], 'parameter': ['voltage_ab', 'voltage_bc', 'voltage_ca', 'current_a', 'real_power']}
+                ]
+
 # ALGORITHM WORKS BELOW
 
 # SAMPLE VALUE OF METERS
@@ -60,24 +45,22 @@ for meter_result in meter_results:
     i = 0 # <- This is only for the Index of register_addresses
     for register_address in register_addresses:
         
-        if client.connect():
+        if pymodbus_client.connect():
             try:
-    
                 if model_id == 1:
-                    response = client.read_holding_registers(address=int(register_address), count=2, slave=slave_address)
+                    # SHCNEIDER
+                    response = pymodbus_client.read_holding_registers(address=int(register_address), count=2, slave=slave_address)
                 else:
-                    response = client.read_input_registers(address=int(register_address), count=2, slave=slave_address)
-                    
-                #response = client.read_input_registers(address=0, count=2, slave=6)
+                    # EASTRON
+                    response = pymodbus_client.read_input_registers(address=int(register_address), count=2, slave=slave_address)
+    
                 if not response.isError():
-                    #sensor_value     = "%.2f"%sample_data[i]
-                    #meter_value_temp = meter_value_temp + (sensor_value,)
-                    sensor_value      = float("%.2f" % client.convert_from_registers(response.registers, data_type=client.DATATYPE.FLOAT32)   )
+                    sensor_value      = float("%.2f" % pymodbus_client.convert_from_registers(response.registers, data_type=pymodbus_client.DATATYPE.FLOAT32)   )
                     meter_value_temp  = meter_value_temp + (sensor_value,)
                 else:
                     print("Error Reading Register")
             finally:
-                client.close()
+                pymodbus_client.close()
         else:
             print("Unable to connect to the Modbus Server.")
             
@@ -94,12 +77,13 @@ for meter_result in meter_results:
        #                 'column_parameter': column_parameter, 
       #                  'meter_value': meter_value
      #               }
+
     #sample_result.append(result_data)
-    insert_algo.insert_sensor_logs(meter_id, slave_address, column_parameter, meter_value)
+    print(sample_result)
+    sys.exit()
+    # insert_algo.insert_sensor_logs(meter_id, column_parameter, meter_value)
     
 
-
-print(sample_result)
 
 
 
