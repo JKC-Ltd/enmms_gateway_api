@@ -154,7 +154,8 @@ def cloud_insert(result_data):
 def insert_offlines(result_data = False):
      array_result      = result_data["array_result"]
      array_result_str  = json.dumps(array_result)
-     sql               = f""" INSERT INTO sensor_offlines (query,gateway_id) VALUES ("{array_result_str}", {gateway_id}) """
+    #  sql               = f""" INSERT INTO sensor_offlines (query,gateway_id) VALUES ("{array_result_str}", {gateway_id}) """
+     sql               = "INSERT INTO sensor_offlines (query, gateway_id) VALUES (%s, %s)"
      db_connection     = local_database()
      try:
         if not db_connection.is_connected():
@@ -162,7 +163,8 @@ def insert_offlines(result_data = False):
             db_connection.reconnect()
 
         local_query     = db_connection.cursor()
-        local_query.execute(sql)
+        # local_query.execute(sql)
+        local_query.execute(sql, (array_result_str, gateway_id))
         db_connection.commit()
         if local_query.rowcount > 0:
             print("Insert to Offlines Successfully")
