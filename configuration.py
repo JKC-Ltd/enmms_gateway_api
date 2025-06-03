@@ -182,14 +182,12 @@ def sync_cloud_to_local():
     from_sql        = f"""SELECT * FROM sensor_offlines WHERE gateway_id = {gateway_id} ORDER BY id"""
     from_query.execute(from_sql)
     from_result     = from_query.fetchall()
-    print(from_result)
-    sys.exit()
     for row in from_result:
         row_id      = row["id"]
         sql         = row["query"]
         to_database = local_database()
         to_query    = to_database.cursor(dictionary=True)
-
+        
         try:
             if to_database.is_connected():
                 to_query.execute(sql)

@@ -24,8 +24,6 @@ meter_results   = configuration.get_metter_ids()
 #                     {'id': 2, 'slave_address': '6', 'sensor_model_id': '2', 'register_address': [0, 6, 12, 18, 342], 'parameter': ['voltage_ab', 'voltage_bc', 'voltage_ca', 'current_a', 'real_power']}, 
 #                     {'id': 3, 'slave_address': '7', 'sensor_model_id': '2', 'register_address': [0, 6, 12, 18, 342], 'parameter': ['voltage_ab', 'voltage_bc', 'voltage_ca', 'current_a', 'real_power']}
 #                 ]
-print(meter_results)
-sys.exit()
 # ALGORITHM WORKS BELOW
 for meter_result in meter_results:
     model_id            = meter_result['sensor_model_id']
