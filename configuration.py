@@ -237,6 +237,7 @@ def sync_local_to_cloud():
     from_result     = from_query.fetchall()
 
     for row in from_result:
+        print(row["query"])
         json_data   = set(json.loads(row["query"]))
         result_data = {"array_result": json_data }
         cloud_insert(result_data)
