@@ -72,13 +72,13 @@ for meter_result in meter_results:
     meter_value      = (gateway_id, meter_id) + meter_value_temp
     
     
-    #result_data      = { 'meter_id':meter_id, 
-        #                'slave_address': slave_address, 
-       #                 'column_parameter': column_parameter, 
-      #                  'meter_value': meter_value
-     #               }
+    result_data      = { 'meter_id':meter_id, 
+                       'slave_address': slave_address, 
+                       'column_parameter': column_parameter, 
+                       'meter_value': meter_value
+                   }
 
-    #sample_result.append(result_data)
+    sample_result.append(result_data)
     print(sample_result)
     sys.exit()
     # insert_algo.insert_sensor_logs(meter_id, column_parameter, meter_value)
